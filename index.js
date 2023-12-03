@@ -27,6 +27,7 @@ async function run() {
 
     const biodatasCollection = client.db('BiodatasDB').collection('Biodata');
     const storyCollection = client.db('StoryDB').collection('story');
+    const favouriteCollection = client.db('FavouriteDB').collection('favourite');
     
     app.get('/biodatas', async(req,res) => {
       let query= {}
@@ -59,7 +60,13 @@ async function run() {
       const query = { _id: new ObjectId(id) }
       const result = await biodatasCollection.findOne(query);
       res.send(result);
-  })
+    });
+
+    app.post('/favourite', async (req, res) => {
+      const  favourite = req.body;
+      const result = await favouriteCollection.insertOne(favourite);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
