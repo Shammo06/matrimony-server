@@ -61,6 +61,11 @@ async function run() {
       const result = await biodatasCollection.findOne(query);
       res.send(result);
     });
+    app.post('/biodatas', async (req, res) => {
+      const biodata = req.body;
+      const result = await biodatasCollection.insertOne(biodata);
+      res.send(result);
+    })
 
     app.post('/favourite', async (req, res) => {
       const  favourite = req.body;
