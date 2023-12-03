@@ -30,8 +30,9 @@ async function run() {
     
     app.get('/biodatas', async(req,res) => {
       let query= {}
-      if(req.query.biodataType){
-        query={biodataType:'premium'}
+      console.log(req.query)
+      if(req.query?.biodataType){
+        query={biodataType:req.query.biodataType}
       }
       const result = await biodatasCollection.find(query).sort({age:1}).toArray();
       console.log(result)
