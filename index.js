@@ -36,7 +36,7 @@ async function run() {
       }
       const result = await biodatasCollection.find(query).sort({age:1}).toArray();
       res.send(result);
-    })
+    });
     app.get('/biodata', async(req,res) => {
       let query= {}
       if(req.query){
@@ -52,7 +52,14 @@ async function run() {
       }
       const result = await biodatasCollection.find(query).toArray();
       res.send(result);      
-    })  
+    });
+    
+    app.get('/biodata/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) }
+      const result = await biodatasCollection.findOne(query);
+      res.send(result);
+  })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
