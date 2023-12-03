@@ -35,8 +35,23 @@ async function run() {
         query={biodataType:req.query.biodataType}
       }
       const result = await biodatasCollection.find(query).sort({age:1}).toArray();
-      console.log(result)
       res.send(result);
+    })
+    app.get('/biodata', async(req,res) => {
+      let query= {}
+      if(req.query){
+        if(req.query.sex){
+          query["sex"]=req.query.sex
+        }
+        if(req.query.division){
+          query["division"]=req.query.division
+        }
+        if(req.query.age){
+          query["age"]= {$lte: req.query.age}
+        }        
+      }
+      const result = await biodatasCollection.find(query).toArray();
+      res.send(result);      
     })  
 
     // Send a ping to confirm a successful connection
