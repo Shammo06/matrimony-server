@@ -89,15 +89,15 @@ async function run() {
     });
 
     app.get('/favourite', async(req,res) => {
-      let query= {}      
-      if(req.query.userEmail){
-        query={userEmail:req.query.userEmail}
-      }
-      console.log(query)
-      const result = await favouriteCollection.find(query).toArray();
+      const result = await favouriteCollection.find().toArray();
       res.send(result);
     });
-
+    app.delete('/favourite/:id', async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await favouriteCollection.deleteOne(query);
+      res.send(result);
+    })
     //SuccessStory
     app.get('/successStory', async(req,res) => {
       let query= {}      
@@ -148,6 +148,7 @@ async function run() {
       const result = await contactCollection.insertOne(user);
       res.send(result);
     });
+   
 
 
     // Send a ping to confirm a successful connection
